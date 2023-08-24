@@ -66,6 +66,26 @@
             return (float)result;
         }
 
+        public void SetWeight(params float[] weights)
+        {
+            if(weights == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if(weights.Length != Weights.Count)
+            {
+                throw new ArgumentException("Wrong arguments count.");
+            }
+
+            // TODO: delete after adding network learning capability
+            for(int i = 0; i < weights.Length; i++)
+            {
+                Weights[i] = weights[i];
+            }
+
+        }
+
         public override string ToString()
         {
             return Output.ToString(); 
