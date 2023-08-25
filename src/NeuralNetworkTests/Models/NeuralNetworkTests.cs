@@ -8,6 +8,35 @@ namespace NeuralNetwork.Models.Tests
         [TestMethod()]
         public void FeedForwardTest()
         {
+            var outputs = new float[] { 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 };
+            var inputs = new float[,]
+            {
+                // Результат - Пациент болен - 1
+                //             Пациент Здоров - 0
+
+                // Неправильная температура T
+                // Хороший возраст A
+                // Курит S
+                // Правильно питается F
+                //T  A  S  F
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 1 },
+                { 0, 0, 1, 0 },
+                { 0, 0, 1, 1 },
+                { 0, 1, 0, 0 },
+                { 0, 1, 0, 1 },
+                { 0, 1, 1, 0 },
+                { 0, 1, 1, 1 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 1 },
+                { 1, 0, 1, 0 },
+                { 1, 0, 1, 1 },
+                { 1, 1, 0, 0 },
+                { 1, 1, 0, 1 },
+                { 1, 1, 1, 0 },
+                { 1, 1, 1, 1 }
+            };
+
             var topology = new Topology(4, 1, 2);
             var neuralNetwork = new NeuralNetwork(topology);
 

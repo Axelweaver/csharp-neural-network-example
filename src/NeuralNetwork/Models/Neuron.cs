@@ -8,6 +8,11 @@
         public List<float> Weights { get; }
 
         /// <summary>
+        /// Input signals
+        /// </summary>
+        public List<float> Inputs { get; }
+
+        /// <summary>
         /// Neuron type
         /// </summary>
         public NeuronType NeuronType { get; }
@@ -18,7 +23,12 @@
         public float Output { get; private set; }
 
         /// <summary>
-        /// Static weight
+        /// 
+        /// </summary>
+        public float Delta { get; private set; }
+
+        /// <summary>
+        /// ctor
         /// </summary>
         /// <param name="inputCount">input neuron parameters count</param>
         /// <param name="type">type of neuron</param>
@@ -26,10 +36,19 @@
         {
             NeuronType = type;
             Weights = new List<float>(inputCount);
+            Inputs = new List<float>(inputCount);
 
-            for(int i = 0; i < inputCount; i++)
+            InitWeightsRandomValue(inputCount);
+        }
+
+        private void InitWeightsRandomValue(int inputCount)
+        {
+            var rnd = new Random();
+
+            for (int i = 0; i < inputCount; i++)
             {
-                Weights.Add(1);
+                Weights.Add((float)rnd.NextDouble());
+                Inputs.Add(0);
             }
         }
 
@@ -44,6 +63,10 @@
             if(inputs.Count != Weights.Count)
             {
                 throw new ArgumentException("Wrong inputs count. Not equals weights count");
+            }
+            for (int i = 0; i < inputs.Count; i++)
+            {
+                Inputs[i] = inputs[i];
             }
 
             var sum = 0.0F;
@@ -72,6 +95,13 @@
             return (float)result;
         }
 
+        private float SigmoidDx(float x)
+        {
+            var sigmoid = Sigmoid(x);
+            var result = sigmoid / (1 - sigmoid);
+            return result;
+        }
+
         public void SetWeight(params float[] weights)
         {
             if(weights == null)
@@ -90,6 +120,26 @@
                 Weights[i] = weights[i];
             }
 
+        }
+
+        public void Learn(float error, float learningRate)
+        {
+            // input neurons not needed to learning
+            if(NeuronType == NeuronType.Input)
+            {
+                return;
+            }
+
+            Delta = error * SigmoidDx(Output);
+
+            for(int i = 0; i < Weights.Count;i++)
+            {
+                var weight = Weights[i];
+                var input = Inputs[i];
+
+                var newWeight = weight - input * Delta * learningRate;
+                Weights[i] = newWeight;
+            }
         }
 
         public override string ToString()

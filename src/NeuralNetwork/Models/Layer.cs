@@ -13,7 +13,9 @@
         /// <summary>
         /// Neurons count
         /// </summary>
-        public int Count => Neurons?.Count ?? 0;
+        public int NeuronsCount => Neurons?.Count ?? 0;
+
+        public NeuronType NeuronType { get; }
 
         /// <summary>
         /// ctor
@@ -25,16 +27,22 @@
             // TODO: check all input neurons for a types
 
             Neurons = neurons;
+            NeuronType = type;
         }
 
         public List<float> GetSignals()
         {
-            var result = new List<float>(Count);
+            var result = new List<float>(NeuronsCount);
             foreach (var neuron in Neurons)
             {
                 result.Add(neuron.Output);
             }
             return result;
+        }
+
+        public override string ToString()
+        {
+            return NeuronType.ToString();
         }
     }
 }
