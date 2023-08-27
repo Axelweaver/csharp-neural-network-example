@@ -11,13 +11,13 @@ namespace NeuralNetwork.Models.Tests
             var outputs = new float[] { 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 };
             var inputs = new float[,]
             {
-                // Результат - Пациент болен - 1
-                //             Пациент Здоров - 0
+                // Result - the patient is sick     - 1
+                //          the patient is healthy  - 0
 
-                // Неправильная температура T
-                // Хороший возраст A
-                // Курит S
-                // Правильно питается F
+                // wrong temperature T
+                // good age A
+                // smoking S
+                // good food F
                 //T  A  S  F
                 { 0, 0, 0, 0 },
                 { 0, 0, 0, 1 },

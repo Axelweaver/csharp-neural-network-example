@@ -1,6 +1,4 @@
 ﻿
-using System.Security.Cryptography;
-
 namespace NeuralNetwork.Models
 {
     public class NeuralNetwork
